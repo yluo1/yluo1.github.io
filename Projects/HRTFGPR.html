@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/mytemplate.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Statistical Analysis of Head Related Transfer Function (HRTF) Data</title>
+<!-- InstanceEndEditable -->
+<style type="text/css"> 
+<!-- 
+body  {
+	margin: 0; /* it's good practice to zero the margin and padding of the body element to account for differing browser defaults */
+	padding: 0;
+	text-align: center; /* this centers the container in IE 5* browsers. The text is then set to the left aligned default in the #container selector */
+	color: #000000;
+	background-color: #FF9;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 100%;
+	margin-top: 0px;
+}
+.twoColLiqLtHdr #container {
+	width: 1024px; /* the auto margins (in conjunction with a width) center the page */
+	border: 1px solid #000000;
+	text-align: left; /* this overrides the text-align: center on the body element. */
+	background-color: #666;
+	position: static;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
+} 
+.twoColLiqLtHdr #header {
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-color: #F90;
+	padding-top: 0;
+	padding-right: 10px;
+	padding-bottom: 0;
+	padding-left: 10px;
+	position: static;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	height: 100px;
+	border-bottom-width: thin;
+	color: #000;
+	font-family: "Lucida Console", Monaco, monospace;
+} 
+.twoColLiqLtHdr #header h1 {
+	margin: 0; /* zeroing the margin of the last element in the #header div will avoid margin collapse - an unexplainable space between divs. If the div has a border around it, this is not necessary as that also avoids the margin collapse */
+	padding: 10px 0; /* using padding instead of margin will allow you to keep the element away from the edges of the div */
+}
+
+/* Tips for sidebar1:
+1. since we are working in percentages, it's best not to use padding on the sidebar. It will be added to the width for standards compliant browsers creating an unknown actual width. 
+2. Space between the side of the div and the elements within it can be created by placing a left and right margin on those elements as seen in the ".twoColLiqLtHdr #sidebar1 p" rule.
+3. Since Explorer calculates widths after the parent element is rendered, you may occasionally run into unexplained bugs with percentage-based columns. If you need more predictable results, you may choose to change to pixel sized columns.
+*/
+.twoColLiqLtHdr #sidebar1 {
+	float: left;
+	width: 18%; /* since this element is floated, a width must be given */
+	background: #EBEBEB;
+	background-color: #FFF;
+	padding-top: 15px;
+	padding-right: 0;
+	padding-bottom: 15px;
+	padding-left: 0;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #000000;
+	border-right-color: #000000;
+	border-bottom-color: #000000;
+	border-left-color: #000000;
+}
+.twoColLiqLtHdr #sidebar1 h3, .twoColLiqLtHdr #sidebar1 p {
+	margin-left: 10px; /* the left and right margin should be given to every element that will be placed in the side columns */
+	margin-right: 10px;
+}
+
+/* Tips for mainContent:
+1. the space between the mainContent and sidebar1 is created with the left margin on the mainContent div.  No matter how much content the sidebar1 div contains, the column space will remain. You can remove this left margin if you want the #mainContent div's text to fill the #sidebar1 space when the content in #sidebar1 ends.
+2. to avoid float drop at a supported minimum 800 x 600 resolution, elements within the mainContent div should be 430px or smaller (this includes images).
+3. in the Internet Explorer Conditional Comment below, the zoom property is used to give the mainContent "hasLayout." This avoids several IE-specific bugs.
+*/
+.twoColLiqLtHdr #mainContent {
+	background-color: #FFF;
+	border: solid #000000 1px;
+	margin-top: 0;
+	margin-right: 20px;
+	margin-bottom: 0;
+	margin-left: 21%;
+	padding-left: 20px;
+	padding-right: 20px;
+} 
+.twoColLiqLtHdr #footer {
+	padding: 0 10px; /* this padding matches the left alignment of the elements in the divs that appear above it. */
+	background:#DDDDDD;
+	background-color: #FFF;
+} 
+.twoColLiqLtHdr #footer p {
+	margin: 0; /* zeroing the margins of the first element in the footer will avoid the possibility of margin collapse - a space between divs */
+	padding: 10px 0; /* padding on this element will create space, just as the the margin would have, without the margin collapse issue */
+}
+
+/* Miscellaneous classes for reuse */
+.fltrt { /* this class can be used to float an element right in your page. The floated element must precede the element it should be next to on the page. */
+	float: right;
+	margin-left: 8px;
+}
+.fltlft { /* this class can be used to float an element left in your page */
+	float: left;
+	margin-right: 8px;
+}
+.clearfloat { /* this class should be placed on a div or break element and should be the final element before the close of a container that should fully contain a float */
+	clear:both;
+    height:0;
+    font-size: 1px;
+    line-height: 0px;
+}
+a:link {
+	color: #009;
+}
+a:visited {
+	color: #009;
+}
+body,td,th {
+	font-size: 18px;
+	font-family: "Lucida Console", Monaco, monospace;
+}
+.twoColLiqLtHdr #container .clearfloat {
+}
+.twoColLiqLtHdr #container {
+	background-attachment: fixed;
+	background-repeat: repeat-y;
+	background-position: center center;
+	background-color: #FC6;
+}
+.twoColLiqLtHdr #container #header h1 strong {
+	color: #0CC;
+}
+.twoColLiqLtHdr #container #header h1 strong {
+	color: #000;
+	font-family: "Lucida Console", Monaco, monospace;
+}
+.twoColLiqLtHdr #container #header table tr td strong {
+	font-size: 36px;
+}
+--> 
+</style><!--[if IE]>
+<style type="text/css"> 
+/* place css fixes for all versions of IE in this conditional comment */
+.twoColLiqLtHdr #sidebar1 { padding-top: 30px; }
+.twoColLiqLtHdr #mainContent { zoom: 1; padding-top: 15px; }
+/* the above proprietary zoom property gives IE the hasLayout it needs to avoid several bugs */
+</style>
+<![endif]-->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+</head>
+
+<body class="twoColLiqLtHdr">
+
+<div id="container"> 
+  <div id="header">
+    <table width="983" border="0">
+      <tr>
+        <td width="860" height="64"><strong>Yuancheng[mike] Luo</strong>
+        <hr /></td>
+        <td width="113" rowspan="2"><img src="../Images/umdemblem.gif" width="89" height="78" align="right" /></td>
+      </tr>
+      <tr>
+        <td height="20"><a href="mailto:yluo1@mail.umd.edu">luoyuancheng@gmail.com</a></td>
+      </tr>
+    </table>
+    <p><a href="mailto:yluo1@mail.umd.edu"></a></p>
+  </div>
+  <div id="sidebar1">
+    <p><a href="../index.html">Homepage</a></p>
+    <p><a href="../research.html">Research</a>    </p>
+    <p><a href="../education.html">Education</a></p>
+    <p><a href="../codes.html">Codes</a></p>
+    <p></p>
+  </div>
+  <div id="mainContent"><!-- InstanceBeginEditable name="EditRegion3" -->
+    <h1><strong>Statistical Analysis of Head Related Transfer Function (HRTF) Data</strong></h1>
+    <hr />
+    <p>The Head Related Transfer Function (HRTF) is a function that characterizes the response of a given individual to sound from a particular 
+      location in an egocentric coordinate system. The range dependence is often neglected, and the HRTF is approximated as a function of frequency
+      and direction. The HRTF displays considerable inter-personal variability, and a major open problem is the development of a generative model
+      for the HRTF from anthropometry. Further, the sampling used in measuring HRTF data varies widely from database to database, and moreover
+      often there are no measurements for elevations below the subject. This raises associated questions of optimal sampling, interpolation, holefilling and others. In this work we model the HRTF via a non-parametric, data-driven, Gaussian Process Regression model. We develop efficient regression techniques to perform inference using this model on measured HRTF data. We then suggest methods for HRTF
+      interpolation, HRTF extrapolation, feature extraction and sampling. The methods are tested on the CIPIC database and results presented.</p>
+    <p><img src="../Images/projects/hrtfgpr/sparsehrtf.jpg" width="723" height="247" /></p>
+    <p><a href="../Documents/Papers/Paper_5_ICASSP_2013.pdf">ICASSP 2013 Paper<br />
+    </a><a href="http://scitation.aip.org/getpdf/servlet/GetPDFServlet?filetype=pdf&amp;id=PMARCW000019000001050011000001&amp;idtype=cvips&amp;doi=10.1121/1.4799872&amp;prog=normal">ICA 2013 Paper</a><br />
+    <a href="http://jmlr.csail.mit.edu/proceedings/papers/v31/luo13b.pdf"> </a><a href="../Downloads/GGPR.zip">Grid-GPR Toolbox</a><a href="../Downloads/GGPR.zip"></a><br />
+    <a href="../Documents/Papers/Paper_5_ICASSP_2013.pdf"></a></p>
+  <!-- InstanceEndEditable -->
+<!-- end #mainContent -->
+<span style="color: #999"></span></div>
+	<!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats --><br class="clearfloat" />
+  <div id="footer">
+    <p> last update:
+      <!-- #BeginDate format:Am1 -->March 13, 2016<!-- #EndDate -->
+    </p>
+  <!-- end #footer --></div>
+<!-- end #container --></div>
+</body>
+<!-- InstanceEnd --></html>
